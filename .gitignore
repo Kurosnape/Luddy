@@ -1,0 +1,5 @@
+# Dependency modules
+node_modules
+
+# Dest
+dist
