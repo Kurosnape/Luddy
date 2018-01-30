@@ -3,3 +3,8 @@ node_modules
 
 # Dest
 dist
+assets/dist
+
+# Occured some errors?
+yarn-error.log
+npm.log

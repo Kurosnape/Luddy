@@ -2,8 +2,12 @@ import app from './app'
 import * as http from 'http'
 
 const config = require('../config')
-const locale = require(`../locales/${config.locale}.json`)
-// const debug = require('debug')('luddy:server')
+const locale = require(`../locales`)
+
+// Override enviroment
+if (config.debug) {
+  app.set('env', 'development')
+}
 
 // Get port from enviroment and Store in Express
 const port = normalizePort(`${config.port}` || `${process.env.PORT}`)
@@ -53,7 +57,7 @@ function onError(error: NodeJS.ErrnoException): void {
       process.exit(1)
       break
     case 'EADDRINUSE':
-      console.error(locale['Port %s already in use'], bind)
+      console.error(locale['%s already in use'], bind)
       process.exit(1)
       break
     default:
@@ -75,6 +79,5 @@ function onListening(): void {
   const bind = app.get('port')
   const mode = (app.get('env') === 'development') ? locale['Development'] : locale['Production']
 
-  console.log(locale['App is running at http://localhost:%d in %s mode'], bind, mode)
-  console.log(locale['Press CTRL-C to stop\n'])
+  console.log(locale['Application is running on http://localhost:%d with %s Mode\nPress CTRL-C to stop application.\n'], bind, mode)
 }
