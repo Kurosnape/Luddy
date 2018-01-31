@@ -1,7 +1,7 @@
 extends layout
 
 block content
-if user != null
-  p Hello, #{user.username}!
-else
-  p Hello, Guest!
+  if user !== null
+    p Hello, #{user.username}
+  else
+    p Hello, Guest!

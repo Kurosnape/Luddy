@@ -1,5 +1,6 @@
 import app from './app'
 import * as http from 'http'
+import * as socket from 'socket.io'
 
 const config = require('../config')
 const locale = require(`../locales`)
@@ -18,6 +19,17 @@ const server = http.createServer(app)
 server.listen(port)
 server.on('error', onError)
 server.on('listening', onListening)
+
+// Attach Socket.io Server
+const io = socket.listen(server)
+io.sockets.on('connection', (socket) => {
+  socket.emit('toClient', { msg: 'Successfully Established'})
+  socket.on('fromClient', (data) => {
+    socket.broadcast.emit('toClient', data) // Send other clients a message expect self
+    socket.emit('toClient', data)
+    console.log(`Message from ${data.msg}`)
+  })
+})
 
 /**
  * Normalize port into a number, string, or false

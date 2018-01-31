@@ -82,17 +82,44 @@ exports.disallow_commands = false
 
 // Login Items
 exports.passport = {
-  use_naver: true,
-  use_twitter: true,
-  use_facebook: true,
-  use_kakao: true
+  naver: {
+    enable: false,
+    clientId: '',
+    clientSecret: '',
+    callbackUrl: ''
+  },
+  kakao: {
+    enable: true,
+    clientId: 'bed57c53db3295db6041cec9bd536df3',
+    clientSecret: 'hOHyLpCOI2vBmTMkfZJp5SDTuCTJZMt1',
+    callbackUrl: '/oauth/kakao/callback'
+  },
+  facebook: {
+    enable: false,
+    cliendId: '',
+    clientSecret: '',
+    callbackUrl: ''
+  }
+}
+
+/**
+ * Set up whether to use google analytics (alias as GA) .
+ * Override false when debug mode on
+ * 
+ * @return {boolean}
+ */
+exports.enableGA = false
+exports.ga = {
+  token: ''
 }
 
 // DO NOT TOUCH THIS
 // 절대로 수정하지 마세요
 exports.handle_hash = '$b_21^0Ch9'
 exports.enableLock = (exports.enableWhitelist) ? false : exports.enableLock
-exports.lock = (exports.enableLock && exports.lock !== '') ? exports.lock : "Luddy"
+// [Deprecated] 비밀번호를 (공백)으로 설정할 수도 있으므로 삭제
+// exports.lock = (exports.enableLock && exports.lock !== '') ? exports.lock : "Luddy"
+exports.enableGA = (exports.debug) ? false : exports.enableGA
 if (exports.port == 443)
   exports.use_https = true
 exports.assets_maxAge = 9000000
