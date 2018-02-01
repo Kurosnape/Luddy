@@ -48,6 +48,7 @@ exports.lock = "Luddy"
 exports.server_name = pkg.name.charAt(0).toUpperCase() + pkg.name.slice(1)
 exports.server_version = pkg.version
 exports.server_description = pkg.description
+exports.server_api_version = pkg.version.split('.').shift()
 exports.port = 4822
 exports.locale = "ko"
 exports.use_https = false
@@ -86,7 +87,7 @@ exports.passport = {
     enable: false,
     clientId: '',
     clientSecret: '',
-    callbackUrl: ''
+    callbackUrl: '/oauth/naver/callback'
   },
   kakao: {
     enable: true,
@@ -98,7 +99,13 @@ exports.passport = {
     enable: false,
     cliendId: '',
     clientSecret: '',
-    callbackUrl: ''
+    callbackUrl: '/oauth/facebook/callback'
+  },
+  twitter: {
+    enable: false,
+    consumerKey: '',
+    consumerSecret: '',
+    callbackUrl: '/oauth/twitter/callback'
   }
 }
 

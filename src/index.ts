@@ -23,7 +23,7 @@ server.on('listening', onListening)
 // Attach Socket.io Server
 const io = socket.listen(server)
 io.sockets.on('connection', (socket) => {
-  socket.emit('toClient', { msg: 'Successfully Established'})
+  socket.emit('toClient', { msg: 'Successfully Established' })
   socket.on('fromClient', (data) => {
     socket.broadcast.emit('toClient', data) // Send other clients a message expect self
     socket.emit('toClient', data)

@@ -1,10 +1,26 @@
 # Dependency modules
-node_modules
+node_modules/
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Bower dependency directory
+bower_components
 
 # Dest
 dist
 assets/dist
 
 # Occured some errors?
-yarn-error.log
-npm.log
+logs
+*.logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock

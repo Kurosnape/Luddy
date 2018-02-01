@@ -1,5 +1,3 @@
-$test: #cc4848;
+@import '_variable';
 
-a {
-  color: $test
-}
+@import '_login';

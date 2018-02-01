@@ -5,39 +5,52 @@ interface IUserModel extends IUser, Document {
 
 }
 
-export let UserSchema: Schema = new Schema({
-  username: {
-    required: true,
-    type: String
+export type AuthToken = {
+  accessToken: string,
+  kind: string
+}
+
+export const UserSchema: Schema = new Schema({
+  email: { type: String, unique: true },
+  password: String,
+  passwordResetToken: String,
+  passwordResetExpires: Date,
+
+  naver: String,
+  kakao: String,
+  facebook: String,
+  twitter: String,
+  google: String,
+  tokens: Array,
+
+  profile: {
+    name: String,
+    gender: String,
+    picture: String
   },
-  email: {
-    required: true,
-    type: String
-  },
-  createdAt: {
-    required: true,
-    type: Date
-  },
-  lastModifiedAt: {
-    required: true,
-    type: Date
-  },
-  permissionLevel: {
-    required: true,
-    type: Number
-  }
-})
+  createdAt: Date,
+  lastModifiedAt: Date,
+  permissionLevel: Number
+}, { timestamps: true })
 
 UserSchema.pre('save', (next) => {
-  if (!this.createdAt) {
-    this.createdAt = new Date()
+  const user = this
+
+  if (!user.createdAt) {
+    user.createdAt = new Date()
   }
 
-  if (!this.permissionLevel) {
-    this.permissionLevel = 100
+  if (!user.permissionLevel) {
+    user.permissionLevel = 100
+  }
+
+  if (!user.isModified('password')) {
+    return next()
   }
 
   next()
 })
 
-export const User: Model<IUserModel> = model<IUserModel>('User', UserSchema)
+const User: Model<IUserModel> = model<IUserModel>('User', UserSchema)
+
+export default User
