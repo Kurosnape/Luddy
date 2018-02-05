@@ -4,7 +4,7 @@ const locale = require('../../locales')
 
 export const login = (req: Request, res: Response) => {
   // if logged in then redirect to root
-  if (req.user !== undefined) {
+  if (req.user) {
     res.redirect('/')
   } else {
     res.render('login', {

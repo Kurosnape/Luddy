@@ -24,6 +24,11 @@
  * 가져야 합니다. (즉, GNU GPL 라이센스를 명시해주세요.)
  */
 
+/**
+ * 아직 개발 중인 어플리케이션입니다.
+ *
+ * TODO.  cluster, whitelist, lock
+ */
 const pkg = require('./package.json')
 
 // Enable debug
@@ -64,6 +69,8 @@ exports.use_https = false
 exports.import_cert = []
 exports.mongoUrl = "mongodb://localhost:27017"
 
+exports.cluster = false
+
 // Lists of admins, operators
 exports.administrator = ["Kurosnape"]
 exports.operator = []
@@ -93,23 +100,11 @@ exports.disallow_commands = false
 
 // Login Items
 exports.passport = {
-  google: {
-    enable: false,
-    clientId: '',
-    clientSecret: '',
-    callbackUrl: '/oauth/google/callback'
-  },
   naver: {
     enable: true,
     clientId: 'Ub4BQ9yStAZzZvfpMuyF',
     clientSecret: 'pzIGdupULt',
     callbackUrl: '/oauth/naver/callback'
-  },
-  kakao: {
-    enable: false,
-    clientId: 'bed57c53db3295db6041cec9bd536df3',
-    clientSecret: 'hOHyLpCOI2vBmTMkfZJp5SDTuCTJZMt1',
-    callbackUrl: '/oauth/kakao/callback'
   },
   facebook: {
     enable: false,
@@ -151,8 +146,6 @@ if (exports.port == 443)
 exports.assets_maxAge = 9000000
 
 // Temporal
-exports.passport.google.enable = false
-exports.passport.kakao.enable = false
 exports.passport.facebook.enable = false
 exports.passport.twitter.enable = false
 

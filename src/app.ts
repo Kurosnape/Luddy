@@ -3,6 +3,7 @@ import { createServer, Server } from 'http'
 import * as express from 'express'
 import * as session from 'express-session'
 import * as flash from 'express-flash'
+import * as compression from 'compression'
 import * as path from 'path'
 import * as logger from 'morgan'
 import * as bodyParser from 'body-parser'
@@ -15,7 +16,6 @@ import * as bluebird from 'bluebird'
 
 import * as passport from 'passport'
 import * as naverStrategy from 'passport-naver'
-import * as kakaoStrategy from 'passport-kakao'
 import * as facebookStrategy from 'passport-facebook'
 import * as twitterStrategy from 'passport-twitter'
 
@@ -76,6 +76,41 @@ class App {
         clientID: config.passport.naver.clientId,
         clientSecret: config.passport.naver.clientSecret,
         callbackURL: config.passport.naver.callbackUrl
+      }, (accessToken, refreshToken, profile, done) => {
+        User.findOne({ 'provider': 'naver', 'id': profile.id })
+            .then(user => {
+              if (!user) {
+                const newUser = new User()
+
+                newUser.accessToken = accessToken
+                newUser.id = profile.id
+                newUser.displayName = profile.displayName
+                newUser.provider = 'naver'
+
+                return newUser.save()
+                              .then(user => done(null, user))
+                              .catch(e => done(e, false))
+              }
+
+              return done(null, user)
+            })
+            .catch(e => done(e, false))
+      }))
+    }
+
+    if (config.passport.facebook.enable) {
+      passport.use('facebook-login', new facebookStrategy.Strategy({
+        clientID: config.passport.facebook.cliendId,
+        clientSecret: config.passport.facebook.clientSecret,
+        callbackURL: config.passport.facebook.callbackUrl
+      }, (accessToken, refreshToken, profile, done) => done(null, profile)))
+    }
+
+    if (config.passport.twitter.enable) {
+      passport.use('twitter-login', new twitterStrategy.Strategy({
+        consumerKey: config.passport.twitter.consumerKey,
+        consumerSecret: config.passport.twitter.consumerSecret,
+        callbackURL: config.passport.twitter.callbackUrl
       }, (accessToken, refreshToken, profile, done) => done(null, profile)))
     }
   }
@@ -98,6 +133,14 @@ class App {
     }
 
     res.redirect('/login')
+  }
+
+  private isLocked: express.Handler = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    if (!config.enableLock) {
+      return next()
+    }
+
+    res.redirect('/locked')
   }
 
   private createApplication(): void {
@@ -172,13 +215,15 @@ class App {
     this.express.set('views', path.join(__dirname, '../views'))
     this.express.set('view engine', 'hbs')
 
+    this.express.use(compression())
+
     this.express.use(logger('dev'))
     this.express.use(bodyParser.json())
     this.express.use(bodyParser.urlencoded({ extended: false }))
 
     // Link dist folder to assets<main> and Allow to access assets
     this.express.use('/assets', express.static(path.join(__dirname, '../assets/dist'), { maxAge: config.assets_maxAge })) // 2.5 hours
-    this.express.use('/assets', express.static(path.join(__dirname, '../assets/static'), { maxAge: config.assets_maxAge })) // 2.5 hours
+    this.express.use('/', express.static(path.join(__dirname, '../assets/static'), { maxAge: 31557600000 }))
 
     // Sesstion Handler
     this.express.use(session({
@@ -197,6 +242,11 @@ class App {
     this.express.use(flash())
     this.express.use(lusca.xframe('SAMEORIGIN'))
     this.express.use(lusca.xssProtection(true))
+
+    this.express.use((req, res, next) => {
+      res.locals.user = req.user
+      next()
+    })
   }
 
   /**
@@ -208,17 +258,34 @@ class App {
   private routes(): void {
     const router: express.Router = express.Router()
     
-    router.get('/', this.isAuthenticated, mainController.index)
-    router.get('/login', userController.login)
+    router.get('/', this.isAuthenticated, this.isLocked, mainController.index)
+    router.get('/login', this.isLocked, userController.login)
     router.get('/logout', userController.logout)
-    router.get('/chat', chatController.index)
-    router.get('/admin', adminController.index)
+    router.get('/dashboard', chatController.index)
+    router.get('/locked', mainController.lock)
+    router.use('/admin', adminController.index)
 
     if (config.passport.naver.enable) {
       router.get('/login/naver', passport.authenticate('naver-login'))
       router.get(config.passport.naver.callbackUrl, passport.authenticate('naver-login', {
         successRedirect: '/',
-        failureRedirect: '/login?t=loginFailure&s=naver'
+        failureRedirect: '/login'
+      }))
+    }
+
+    if (config.passport.facebook.enable) {
+      router.get('/login/facebook', passport.authenticate('facebook-login'))
+      router.get(config.passport.facebook.callbackUrl, passport.authenticate('facebook-login', {
+        successRedirect: '/',
+        failureRedirect: '/login'
+      }))
+    }
+    
+    if (config.passport.twitter.enable) {
+      router.get('/login/twitter', passport.authenticate('twitter-login'))
+      router.get(config.passport.twitter.callbackUrl, passport.authenticate('twitter-login', {
+        successRedirect: '/',
+        failureRedirect: '/login'
       }))
     }
 

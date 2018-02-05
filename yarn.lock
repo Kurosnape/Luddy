@@ -19,6 +19,12 @@
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.1.2.tgz#f1af664769cfb50af805431c407425ed619daa21"
 
+"@types/compression@^0.0.35":
+  version "0.0.35"
+  resolved "https://registry.yarnpkg.com/@types/compression/-/compression-0.0.35.tgz#7673a9c4b075e5194ada8c5938291015652a21e1"
+  dependencies:
+    "@types/express" "*"
+
 "@types/connect-mongo@^0.0.35":
   version "0.0.35"
   resolved "https://registry.yarnpkg.com/@types/connect-mongo/-/connect-mongo-0.0.35.tgz#f4b20ddc879b6a9de968b2a765d96b35318784e1"
@@ -119,13 +125,6 @@
 "@types/passport-facebook@^2.1.7":
   version "2.1.7"
   resolved "https://registry.yarnpkg.com/@types/passport-facebook/-/passport-facebook-2.1.7.tgz#3e7cccec85d6db16405828392552493e0a4f834d"
-  dependencies:
-    "@types/express" "*"
-    "@types/passport" "*"
-
-"@types/passport-kakao@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@types/passport-kakao/-/passport-kakao-0.1.0.tgz#4eeb63d900ddc507a81bfc68edcbbe578255d8bc"
   dependencies:
     "@types/express" "*"
     "@types/passport" "*"
@@ -751,6 +750,24 @@ component-inherit@0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/component-inherit/-/component-inherit-0.0.3.tgz#645fc4adf58b72b649d5cae65135619db26ff143"
 
+compressible@~2.0.11:
+  version "2.0.12"
+  resolved "https://registry.yarnpkg.com/compressible/-/compressible-2.0.12.tgz#c59a5c99db76767e9876500e271ef63b3493bd66"
+  dependencies:
+    mime-db ">= 1.30.0 < 2"
+
+compression@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/compression/-/compression-1.7.1.tgz#eff2603efc2e22cf86f35d2eb93589f9875373db"
+  dependencies:
+    accepts "~1.3.4"
+    bytes "3.0.0"
+    compressible "~2.0.11"
+    debug "2.6.9"
+    on-headers "~1.0.1"
+    safe-buffer "5.1.1"
+    vary "~1.1.2"
+
 concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
@@ -831,13 +848,6 @@ create-error-class@^3.0.0:
   dependencies:
     capture-stack-trace "^1.0.0"
 
-cross-env@^5.1.3:
-  version "5.1.3"
-  resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-5.1.3.tgz#f8ae18faac87692b0a8b4d2f7000d4ec3a85dfd7"
-  dependencies:
-    cross-spawn "^5.1.0"
-    is-windows "^1.0.0"
-
 cross-spawn@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-3.0.1.tgz#1256037ecb9f0c5f79e3d6ef135e30770184b982"
@@ -845,7 +855,7 @@ cross-spawn@^3.0.0:
     lru-cache "^4.0.1"
     which "^1.2.9"
 
-cross-spawn@^5.0.1, cross-spawn@^5.1.0:
+cross-spawn@^5.0.1:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-5.1.0.tgz#e8bd0efee58fcff6f8f94510a0a554bbfa235449"
   dependencies:
@@ -1679,10 +1689,6 @@ ini@^1.3.4, ini@~1.3.0:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
 
-interpret@^1.0.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.1.0.tgz#7ed1b1410c6a0e0f78cf95d3b8440c63f78b8614"
-
 invert-kv@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-1.0.0.tgz#104a8e4aaca6d3d8cd157a8ef8bfab2d7a3ffdb6"
@@ -1864,10 +1870,6 @@ is-typedarray@~1.0.0:
 is-utf8@^0.2.0:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/is-utf8/-/is-utf8-0.2.1.tgz#4b0da1442104d1b336340e80797e865cf39f7d72"
-
-is-windows@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/is-windows/-/is-windows-1.0.1.tgz#310db70f742d259a16a369202b51af84233310d9"
 
 isarray@0.0.1:
   version "0.0.1"
@@ -2129,6 +2131,10 @@ micromatch@^3.1.4:
     regex-not "^1.0.0"
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
+
+"mime-db@>= 1.30.0 < 2":
+  version "1.32.0"
+  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.32.0.tgz#485b3848b01a3cda5f968b4882c0771e58e09414"
 
 mime-db@~1.30.0:
   version "1.30.0"
@@ -2555,13 +2561,6 @@ passport-facebook@^2.1.1:
   dependencies:
     passport-oauth2 "1.x.x"
 
-passport-kakao@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/passport-kakao/-/passport-kakao-0.0.5.tgz#dcaab68800793af95566a15e7fef2dcabd3adc2d"
-  dependencies:
-    passport-oauth2 "~1.1.2"
-    pkginfo "~0.3.0"
-
 passport-naver@^1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/passport-naver/-/passport-naver-1.0.6.tgz#a3602c4a3af53306ab2ff9e91d4a35a3c028da9a"
@@ -2585,14 +2584,6 @@ passport-oauth2@1.x.x:
     passport-strategy "1.x.x"
     uid2 "0.0.x"
     utils-merge "1.x.x"
-
-passport-oauth2@~1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/passport-oauth2/-/passport-oauth2-1.1.2.tgz#bd7163b1b6090371868dc4ef6f9f2e1e4cc4b948"
-  dependencies:
-    oauth "0.9.x"
-    passport-strategy "1.x.x"
-    uid2 "0.0.x"
 
 passport-oauth@^1.0.0:
   version "1.0.0"
@@ -2696,10 +2687,6 @@ pinkie-promise@^2.0.0:
 pinkie@^2.0.0:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
-
-pkginfo@~0.3.0:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/pkginfo/-/pkginfo-0.3.1.tgz#5b29f6a81f70717142e09e765bbeab97b4f81e21"
 
 posix-character-classes@^0.1.0:
   version "0.1.1"
@@ -2825,12 +2812,6 @@ readdirp@^2.0.0:
     minimatch "^3.0.2"
     readable-stream "^2.0.2"
     set-immediate-shim "^1.0.1"
-
-rechoir@^0.6.2:
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/rechoir/-/rechoir-0.6.2.tgz#85204b54dba82d5742e28c96756ef43af50e3384"
-  dependencies:
-    resolve "^1.1.6"
 
 redent@^1.0.0:
   version "1.0.0"
@@ -2982,7 +2963,7 @@ resolve-url@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/resolve-url/-/resolve-url-0.2.1.tgz#2c637fe77c893afd2a663fe21aa9080068e2052a"
 
-resolve@^1.1.6, resolve@^1.3.2:
+resolve@^1.3.2:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.5.0.tgz#1f09acce796c9a762579f31b2c1cc4c3cddf9f36"
   dependencies:
@@ -3118,14 +3099,6 @@ shebang-command@^1.2.0:
 shebang-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
-
-shelljs@^0.8.1:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/shelljs/-/shelljs-0.8.1.tgz#729e038c413a2254c4078b95ed46e0397154a9f1"
-  dependencies:
-    glob "^7.0.0"
-    interpret "^1.0.0"
-    rechoir "^0.6.2"
 
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
