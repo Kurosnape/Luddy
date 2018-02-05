@@ -1,5 +1,4 @@
-const config = require('../config')
-const locale = config.locale
+const locale = require('../config')['locale']
 
 // Legacy Code
 // const importer_legacy = (o) => Object.assign(...Object.keys(o).map( k => require(`./${locale}/${o[k]}.json`) ))
@@ -8,5 +7,5 @@ const locale = config.locale
 // from https://twitter.com/killofki/status/957897056277774337
 const importer = ( ...ar ) => Object.assign(...ar.map( component => require(`./${locale}/${component}.json`) ))
 
-const result = importer('server', 'script', 'item')
+const result = importer('server', 'script', 'item', 'map', 'mob', 'npc')
 module.exports = result

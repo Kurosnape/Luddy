@@ -1,13 +1,14 @@
 import { Request, Response } from 'express'
 const config = require('../../config')
+const locale = require('../../locales')
 
 export const login = (req: Request, res: Response) => {
+  // if logged in then redirect to root
   if (req.user !== undefined) {
     res.redirect('/')
   } else {
     res.render('login', {
-      title: `${config.server_name} v${config.server_version}`,
-      description: config.server_description
+      title: `${locale['Login']} ─ ${config.server_name} v${config.server_version}`
     })
   }
 }

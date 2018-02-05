@@ -15,6 +15,15 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * Copyright (C) 2018 Kurosnape <kurosnape@gmail.com> <https://twitter.com/Kurosnape>
+ * 
+ * Luddy 오픈 소스를 사용하실 때, 소스 코드를 무료로 배포해야 하며
+ * 소스 코드를 용도에 따라 수정하실 수 있습니다. 변경된 소스 역시
+ * 프로그램의 소스 코드를 반드시 공개 배포해야 하며 똑같은 라이센스를
+ * 가져야 합니다. (즉, GNU GPL 라이센스를 명시해주세요.)
+ */
+
 const pkg = require('./package.json')
 
 // Enable debug
@@ -53,6 +62,7 @@ exports.port = 4822
 exports.locale = "ko"
 exports.use_https = false
 exports.import_cert = []
+exports.mongoUrl = "mongodb://localhost:27017"
 
 // Lists of admins, operators
 exports.administrator = ["Kurosnape"]
@@ -83,14 +93,20 @@ exports.disallow_commands = false
 
 // Login Items
 exports.passport = {
-  naver: {
+  google: {
     enable: false,
     clientId: '',
     clientSecret: '',
+    callbackUrl: '/oauth/google/callback'
+  },
+  naver: {
+    enable: true,
+    clientId: 'Ub4BQ9yStAZzZvfpMuyF',
+    clientSecret: 'pzIGdupULt',
     callbackUrl: '/oauth/naver/callback'
   },
   kakao: {
-    enable: true,
+    enable: false,
     clientId: 'bed57c53db3295db6041cec9bd536df3',
     clientSecret: 'hOHyLpCOI2vBmTMkfZJp5SDTuCTJZMt1',
     callbackUrl: '/oauth/kakao/callback'
@@ -108,6 +124,9 @@ exports.passport = {
     callbackUrl: '/oauth/twitter/callback'
   }
 }
+
+// Front-end theme-color for support Android Chrome 39
+exports.theme_color = '#09C'
 
 /**
  * Set up whether to use google analytics (alias as GA) .
@@ -130,5 +149,11 @@ exports.enableGA = (exports.debug) ? false : exports.enableGA
 if (exports.port == 443)
   exports.use_https = true
 exports.assets_maxAge = 9000000
+
+// Temporal
+exports.passport.google.enable = false
+exports.passport.kakao.enable = false
+exports.passport.facebook.enable = false
+exports.passport.twitter.enable = false
 
 /* <!-- End of Config file --> */

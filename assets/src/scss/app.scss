@@ -1,3 +1,11 @@
 @import '_variable';
 
+@import '_admin';
 @import '_login';
+
+body {
+  font-size: 14px;
+  font-family: $font
+}
+
+// Halis, Avenir, Helvetica, Arial, sans-serif

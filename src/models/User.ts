@@ -1,31 +1,17 @@
 import { Document, Schema, Model, model } from 'mongoose'
+import * as crypto from 'crypto'
 import { IUser } from '../shards/Users/IUser'
 
-interface IUserModel extends IUser, Document {
-
-}
-
-export type AuthToken = {
-  accessToken: string,
-  kind: string
-}
+interface IUserModel extends IUser, Document {}
 
 export const UserSchema: Schema = new Schema({
+  id: String,
   email: { type: String, unique: true },
-  password: String,
-  passwordResetToken: String,
-  passwordResetExpires: Date,
-
-  naver: String,
-  kakao: String,
-  facebook: String,
-  twitter: String,
-  google: String,
-  tokens: Array,
 
   profile: {
-    name: String,
-    gender: String,
+    username: { type: String, required: true, unique: true},
+    displayName: String,
+    bio: String,
     picture: String
   },
   createdAt: Date,
@@ -34,23 +20,33 @@ export const UserSchema: Schema = new Schema({
 }, { timestamps: true })
 
 UserSchema.pre('save', (next) => {
-  const user = this
-
-  if (!user.createdAt) {
-    user.createdAt = new Date()
+  if (!this.createdAt) {
+    this.createdAt = new Date()
   }
 
-  if (!user.permissionLevel) {
-    user.permissionLevel = 100
-  }
-
-  if (!user.isModified('password')) {
-    return next()
+  if (!this.permissionLevel) {
+    this.permissionLevel = 100
   }
 
   next()
 })
 
-const User: Model<IUserModel> = model<IUserModel>('User', UserSchema)
+UserSchema.methods.name = () => {
+  return this.displayName || this.username
+}
 
+UserSchema.methods.gravatar = (size: number) => {
+  if (!size) {
+    size = 200
+  }
+
+  if (!this.email) {
+    return `https://gravatar.com/avatar/?s=${size}&d=retro`
+  }
+
+  const md5 = crypto.createHash('md5').update(this.email).digest('hex')
+  return `https://gravatar.com/avatar/${md5}?s=${size}&d=retro`
+}
+
+const User: Model<IUserModel> = model<IUserModel>('User', UserSchema)
 export default User

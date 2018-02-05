@@ -1,4 +1,24 @@
+.--login-with-google {
+  background-color: $googleBackground;
+  color: $googleText;
+}
+
 .--login-with-naver {
   background-color: $naverBackground;
   color: $naverText;
+}
+
+.--login-with-kakao {
+  background-color: $kakaoBackground;
+  color: $kakaoText;
+}
+
+.--login-with-facebook {
+  background-color: $facebookBackground;
+  color: $facebookText;
+}
+
+.--login-with-twitter {
+  background-color: $twitterBackground;
+  color: $twitterText;
 }

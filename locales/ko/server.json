@@ -3,9 +3,10 @@
   "Production": "논-개발",
   "Access denied": "접근이 거부되었습니다.",
   "Permission denied": "실행할 권한이 없습니다.",
-  "Application is running on http://localhost:%d with %s Mode\nPress CTRL-C to stop application.\n": "앱이 http://localhost:%d에서 %s 모드로 실행 중입니다.\n컨트롤 + C 키를 눌러 서버를 종료할 수 있습니다.\n",
+  "Application is running on http://localhost:%d\nPress CTRL-C to stop application.\n": "서버가 http://localhost:%d에서 실행 중입니다.\n컨트롤 + C 키를 눌러 서버를 종료할 수 있습니다.\n",
   "%s already in use": "%s가 이미 사용 중입니다.",
   "Invalid values: %s": "%s는 잘못된 값입니다.",
   "Unable to load configuration file.\nConfig syntax may be broken\n": "설정 파일을 불러올 수 없습니다.\n설정 구문이 잘못되었을 수도 있습니다.\n",
-  "Unidentified Error occured: %s": "알 수 없는 에러: %s"
+  "Unidentified Error occured: %s": "알 수 없는 에러: %s",
+  "Server should begin shortly": ""
 }

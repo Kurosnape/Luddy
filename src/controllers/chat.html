@@ -12,11 +12,11 @@
     <span id="msgs"></span>
 
     <script type="text/javascript">
-      var socket = io.connect('http://10.77.68.102:4822')
+      var socket = io.connect()
       $("#msgbox").keyup((event) => {
         if (event.which === 13) {
           socket.emit('fromClient', { msg: $('#msgbox').val() })
-          $('#msgbox').val()
+          $('#msgbox').val('')
         }
       })
       socket.on('toClient', (data) => {
